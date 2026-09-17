@@ -153,7 +153,7 @@ class _LiteRtLmFfiRuntime implements LiteRtLmNativeRuntime {
           Message.user('Engine ignore this message in this mode.').toJson(),
         ),
       );
-      return getBenchmarkInfo(conversation);
+      return await getBenchmarkInfo(conversation);
     } finally {
       if (conversation != null) {
         deleteConversation(conversation);
@@ -201,6 +201,11 @@ class _LiteRtLmFfiRuntime implements LiteRtLmNativeRuntime {
     final maxNumImages = config.maxNumImages;
     if (maxNumImages != null) {
       _engineSettingsSetMaxNumImages(settings, maxNumImages);
+    }
+
+    final visualTokenBudget = this.visualTokenBudget;
+    if (visualTokenBudget != null && visualTokenBudget > 0) {
+      _engineSettingsSetMaxVisionTokensPerImage(settings, visualTokenBudget);
     }
 
     final cacheDir = config.cacheDir;
@@ -1250,6 +1255,8 @@ typedef _EngineSettingsSetMaxNumTokensNative =
     Void Function(Pointer<Opaque>, Int);
 typedef _EngineSettingsSetMaxNumImagesNative =
     Void Function(Pointer<Opaque>, Int);
+typedef _EngineSettingsSetMaxVisionTokensPerImageNative =
+    Void Function(Pointer<Opaque>, Int);
 typedef _EngineSettingsSetCacheDirNative =
     Void Function(Pointer<Opaque>, Pointer<Utf8>);
 typedef _EngineSettingsSetLiteRtDispatchLibDirNative =
@@ -1380,6 +1387,15 @@ external void _engineSettingsSetMaxNumTokens(
 external void _engineSettingsSetMaxNumImages(
   Pointer<Opaque> settings,
   int maxNumImages,
+);
+
+@Native<_EngineSettingsSetMaxVisionTokensPerImageNative>(
+  symbol: 'litert_lm_engine_settings_set_max_vision_tokens_per_image',
+  assetId: _codeAssetName,
+)
+external void _engineSettingsSetMaxVisionTokensPerImage(
+  Pointer<Opaque> settings,
+  int maxVisionTokensPerImage,
 );
 
 @Native<_EngineSettingsSetCacheDirNative>(

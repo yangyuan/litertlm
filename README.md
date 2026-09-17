@@ -5,9 +5,9 @@ Pub Package: https://pub.dev/packages/litertlm
 
 API Reference: https://pub.dev/documentation/litertlm/latest/
 
-Live Example Flutter Project: https://github.com/yangyuan/agentic
+Live Example Flutter Project: https://github.com/yangyuan/agentic-lite
 
-Powered by LiteRT-LM v0.15.0.
+Powered by LiteRT-LM v0.17.0.
 
 ## Overview
 This package is a lightweight bridge to the official LiteRT-LM runtimes. It uses each platform's optimized distribution, providing the same hardware acceleration and capabilities, including the Swift package on iOS and macOS, the Maven artifact on Android, and CLI distribution on Windows.

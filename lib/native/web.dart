@@ -12,7 +12,7 @@ import '../litertlm/session.dart';
 import 'runtime.dart';
 
 const _sdkModuleUrl =
-    'https://cdn.jsdelivr.net/npm/@litert-lm/core@0.15.0/+esm';
+    'https://cdn.jsdelivr.net/npm/@litert-lm/core@0.17.0/+esm';
 const _sdkLoadTimeout = Duration(seconds: 30);
 const _samplerTypeTopP = 2;
 const _unavailableInitTimeInSecond = 0.0;

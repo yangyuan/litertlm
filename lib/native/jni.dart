@@ -213,8 +213,12 @@ class _LiteRtLmJniRuntime implements LiteRtLmNativeRuntime {
 
   @override
   bool? get enableSpeculativeDecoding {
-    final value = _getEnableSpeculativeDecoding.call(_class, JObject.type, []);
-    if (value.reference.pointer == jni_internal.nullptr) {
+    final value = _getEnableSpeculativeDecoding.callNullable(
+      _class,
+      JObject.type,
+      [],
+    );
+    if (value == null) {
       return null;
     }
     try {
@@ -259,12 +263,12 @@ class _LiteRtLmJniRuntime implements LiteRtLmNativeRuntime {
 
   @override
   bool? get filterChannelContentFromKvCache {
-    final value = _getFilterChannelContentFromKvCache.call(
+    final value = _getFilterChannelContentFromKvCache.callNullable(
       _class,
       JObject.type,
       [],
     );
-    if (value.reference.pointer == jni_internal.nullptr) {
+    if (value == null) {
       return null;
     }
     try {
@@ -292,8 +296,8 @@ class _LiteRtLmJniRuntime implements LiteRtLmNativeRuntime {
 
   @override
   int? get visualTokenBudget {
-    final value = _getVisualTokenBudget.call(_class, JObject.type, []);
-    if (value.reference.pointer == jni_internal.nullptr) {
+    final value = _getVisualTokenBudget.callNullable(_class, JObject.type, []);
+    if (value == null) {
       return null;
     }
     try {

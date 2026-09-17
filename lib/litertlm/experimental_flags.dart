@@ -96,10 +96,12 @@ final class ExperimentalFlags {
   /// The visual token budget.
   ///
   /// The number of visual tokens that the model can generate for a single
-  /// image. If null, there is no budget limit and the engine use as much as
-  /// needed.
+  /// image. If null, uses the model or runtime default.
   ///
-  /// Note: This flag takes effect immediately.
+  /// On native platforms, a positive value set before creating and initializing
+  /// an engine also sets its maximum visual tokens per image. Later changes
+  /// affect subsequent messages but must not exceed that engine's maximum.
+  /// This flag is supported by Gemma 4 and is not supported on web.
   static int? get visualTokenBudget =>
       LiteRtLmNativeRuntime.instance.visualTokenBudget;
 

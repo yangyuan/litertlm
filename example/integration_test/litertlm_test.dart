@@ -49,6 +49,31 @@ void main() {
     }
   });
 
+  testWidgets('round-trips nullable experimental flags', (tester) async {
+    final previousSpeculativeDecoding =
+        ExperimentalFlags.enableSpeculativeDecoding;
+    final previousFilterChannelContent =
+        ExperimentalFlags.filterChannelContentFromKvCache;
+    final previousVisualTokenBudget = ExperimentalFlags.visualTokenBudget;
+    addTearDown(() {
+      ExperimentalFlags.enableSpeculativeDecoding = previousSpeculativeDecoding;
+      ExperimentalFlags.filterChannelContentFromKvCache =
+          previousFilterChannelContent;
+      ExperimentalFlags.visualTokenBudget = previousVisualTokenBudget;
+    });
+
+    for (final value in <bool?>[null, false, true, null]) {
+      ExperimentalFlags.enableSpeculativeDecoding = value;
+      expect(ExperimentalFlags.enableSpeculativeDecoding, value);
+      ExperimentalFlags.filterChannelContentFromKvCache = value;
+      expect(ExperimentalFlags.filterChannelContentFromKvCache, value);
+    }
+    for (final value in <int?>[null, 280, 140, null]) {
+      ExperimentalFlags.visualTokenBudget = value;
+      expect(ExperimentalFlags.visualTokenBudget, value);
+    }
+  });
+
   testWidgets('rejects unsupported engine configuration', (tester) async {
     if (kIsWeb) {
       expect(
@@ -360,6 +385,11 @@ void main() {
     final imagePath = await resolveModelAssetPath(
       'assets/images/colored_rect_163_586_615_957.jpg',
     );
+    final previousVisualTokenBudget = ExperimentalFlags.visualTokenBudget;
+    addTearDown(() {
+      ExperimentalFlags.visualTokenBudget = previousVisualTokenBudget;
+    });
+    ExperimentalFlags.visualTokenBudget = 280;
     final engine = Engine(
       engineConfig: EngineConfig(
         modelPath: modelPath,
@@ -371,6 +401,7 @@ void main() {
     try {
       await engine.initialize();
       conversation = await engine.createConversation();
+      ExperimentalFlags.visualTokenBudget = 140;
       final response = await conversation.sendMessage(
         Message.userContents(
           Contents([

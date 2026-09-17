@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 const _partSizeBytes = 512 * 1024 * 1024;
-const _liteRtLmVersion = 'v0.15.0';
+const _liteRtLmVersion = 'v0.17.0';
 const _baseUrl =
     'https://raw.githubusercontent.com/google-ai-edge/LiteRT-LM/$_liteRtLmVersion';
 const _gemma4BaseUrl =

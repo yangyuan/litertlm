@@ -1,3 +1,9 @@
+## 0.0.14
+
+* Updated LiteRT-LM runtime dependencies across supported platforms to v0.17.0.
+* Updated the Android JNI engine guard for the added maximum-vision-token argument.
+* Aligned native `ExperimentalFlags.visualTokenBudget` initialization with the upstream engine-level limit.
+
 ## 0.0.13
 
 * Added `LiteRtLmNativeException` and `LiteRtLmOutOfMemoryException` to report native failures during engine, conversation, and session creation.

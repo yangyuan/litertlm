@@ -13,7 +13,7 @@ constexpr std::size_t kOperationCount = 3;
 
 using CreateEngine = jlong(JNICALL*)(
     JNIEnv*, jobject, jstring, jstring, jstring, jstring, jint, jint, jstring,
-    jboolean, jobject, jstring, jstring, jstring, jint, jint);
+  jboolean, jobject, jstring, jstring, jstring, jint, jint, jint);
 using CreateBenchmark = jlong(JNICALL*)(JNIEnv*, jobject, jstring, jstring,
                                         jint, jint, jstring, jstring, jobject);
 using CreateConversation = jlong(JNICALL*)(
@@ -132,14 +132,16 @@ jlong JNICALL GuardedCreateEngine(
     jint max_num_images, jstring cache_dir, jboolean enable_benchmark,
     jobject enable_speculative_decoding, jstring main_npu_library_dir,
     jstring vision_npu_library_dir, jstring audio_npu_library_dir,
-    jint main_backend_num_threads, jint audio_backend_num_threads) noexcept {
+    jint main_backend_num_threads, jint audio_backend_num_threads,
+    jint max_vision_tokens_per_image) noexcept {
   return Guard(env, receiver, litertlm::kEngineInitialization,
                original_create_engine,
                model_path, backend, vision_backend, audio_backend,
                max_num_tokens, max_num_images, cache_dir, enable_benchmark,
                enable_speculative_decoding, main_npu_library_dir,
                vision_npu_library_dir, audio_npu_library_dir,
-               main_backend_num_threads, audio_backend_num_threads);
+               main_backend_num_threads, audio_backend_num_threads,
+               max_vision_tokens_per_image);
 }
 
 jlong JNICALL GuardedCreateBenchmark(
@@ -222,7 +224,7 @@ Java_org_rockstudio_litertlm_LiteRtLmJniNativeGuard_install(JNIEnv* env,
   JNINativeMethod methods[] = {
       {const_cast<char*>("nativeCreateEngine"),
        const_cast<char*>(
-           "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;ZLjava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II)J"),
+         "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;ZLjava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;III)J"),
        reinterpret_cast<void*>(&GuardedCreateEngine)},
       {const_cast<char*>("nativeCreateBenchmark"),
        const_cast<char*>(
